@@ -1,0 +1,10 @@
+{
+  "name": "irabot",
+  "version": "1.0.0",
+  "author": "Vlad-Stefan Harbuz <vlad@vladh.net>",
+  "private": true,
+  "dependencies": {
+    "@discordjs/opus": "^0.5.0",
+    "discord.js": "^12.5.3"
+  }
+}
