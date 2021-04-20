@@ -1,3 +1,8 @@
+const fs = require('fs');
+const util = require('util')
+const stream = require('stream');
+const pipeline = util.promisify(stream.pipeline);
+
 const Discord = require('discord.js');
 const axios = require('axios');
 const htmlentities = require('html-entities');
@@ -5,6 +10,7 @@ const htmlentities = require('html-entities');
 const config = require('./config');
 
 const PREFIX = '.';
+const DATA_DIR = './data/';
 
 
 function get_command_name(str) {
@@ -54,6 +60,7 @@ function stop(state, message, arguments) {
     state.connection = null;
     state.media_title = '';
     state.media_url = '';
+    state.media_local_path = '';
   } else {
     message.reply("Not playing, so we can't stop.");
   }
@@ -99,7 +106,7 @@ function seek(state, message, arguments) {
     seek_target = (+arguments[0]);
   }
 
-  state.dispatcher = state.connection.play(state.media_url, {seek: seek_target + 's'});
+  state.dispatcher = state.connection.play(state.media_local_path, {seek: seek_target + 's'});
   state.started_playing_at_second = seek_target;
 }
 
@@ -149,6 +156,7 @@ async function play(state, message, arguments) {
     return message.reply('You need to join a voice channel first!');
   }
 
+  // Find media URL
   media_info = await get_media_info(arguments[0]);
 
   if (!media_info.url) {
@@ -158,12 +166,28 @@ async function play(state, message, arguments) {
     );
   }
 
+  console.log('Found media.', media_info);
+
   state.media_url = media_info.url;
   state.media_title = media_info.title;
 
+  // Download media locally
+  state.media_local_path = `${DATA_DIR}media`;
+  console.log(`Downloading ${state.media_url} -> ${state.media_local_path}`);
+  const http_response = await axios({
+    method: 'get',
+    url: state.media_url,
+    responseType: 'stream',
+  });
+  await pipeline(
+    http_response.data,
+    fs.createWriteStream(state.media_local_path)
+  );
+
+  // Play media
   state.voice_channel = message.member.voice.channel;
   state.connection = await state.voice_channel.join();
-  state.dispatcher = state.connection.play(state.media_url);
+  state.dispatcher = state.connection.play(state.media_local_path);
 
   message.reply(`Playing: ${media_info.title}`);
 }
@@ -192,6 +216,7 @@ async function main() {
     connection: null,
     media_title: '',
     media_url: '',
+    media_local_path: '',
     started_playing_at_second: 0,
   };
 
@@ -225,6 +250,10 @@ async function main() {
       await handlers[command](state, message, arguments);
     }
   });
+
+  client.on('debug', console.log);
+  client.on('error', console.error);
+  client.on('warn', console.warn);
 
   client.login(config.token);
 }
