@@ -201,7 +201,7 @@ irabot help:
 \`${PREFIX}play <url>\`: Play from a certain URL. Supports an Overcast URL, or a direct URL to the audio file.
 \`${PREFIX}pause\` or \`${PREFIX}p\`: Pause currently playing audio.
 \`${PREFIX}resume\` or \`${PREFIX}r\`: Resume currently playing audio.
-\`${PREFIX}stop\` or \`${PREFIX}s\`: Stop currently playing audio.
+\`${PREFIX}stop\`: Stop currently playing audio.
 \`${PREFIX}seek [500|-10|+20] Seek to a certain relative of absolute point in time (in seconds).
 \`${PREFIX}status\`: Print current status.
   `.trim());
@@ -240,7 +240,6 @@ async function main() {
       play: play,
       r: resume,
       resume: resume,
-      s: stop,
       seek: seek,
       status: status,
       stop: stop,
