@@ -6,8 +6,8 @@ The default prefix is `.`. You can get a list of commands by typing `.help`. Her
 
 * `.help`: Print help.
 * `.play <url>`: Play from a certain URL. Supports an Overcast URL, or a direct URL to the audio file.
-* `.pause\` or \`.p`: Pause currently playing audio.
-* `.resume\` or \`.r`: Resume currently playing audio.
+* `.pause` or `.p`: Pause currently playing audio.
+* `.resume` or `.r`: Resume currently playing audio.
 * `.stop`: Stop currently playing audio.
 * `.seek [500|-10|+20]`: Seek to a certain relative of absolute point in time (in seconds).
 * `.status`: Print current status.
