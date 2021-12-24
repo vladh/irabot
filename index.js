@@ -117,14 +117,14 @@ async function get_media_info_from_html(initial_url) {
 
   const re_title = /name="og:title" content="(.*)"/;
   const title_match = html.match(re_title);
-  if (title_match.length < 2) {
+  if (!title_match || title_match.length < 2) {
     return {url: null, title: null};
   }
   const title = htmlentities.decode(title_match[1]);
 
   const re_url = /name="twitter:player:stream" content="(.*)"/;
   const url_match = html.match(re_url);
-  if (url_match.length < 2) {
+  if (!url_match || url_match.length < 2) {
     return {url: null, title: null};
   }
   const url = url_match[1];
