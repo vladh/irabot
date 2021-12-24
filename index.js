@@ -202,7 +202,7 @@ irabot help:
 \`${PREFIX}pause\` or \`${PREFIX}p\`: Pause currently playing audio.
 \`${PREFIX}resume\` or \`${PREFIX}r\`: Resume currently playing audio.
 \`${PREFIX}stop\`: Stop currently playing audio.
-\`${PREFIX}seek [500|-10|+20] Seek to a certain relative of absolute point in time (in seconds).
+\`${PREFIX}seek [500|-10|+20]\`: Seek to a certain relative of absolute point in time (in seconds).
 \`${PREFIX}status\`: Print current status.
   `.trim());
 }
