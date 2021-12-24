@@ -2,8 +2,34 @@
 
 A Discord bot for listening to podcasts.
 
+The default prefix is `.`. You can get a list of commands by typing `.help`. Here's an excerpt:
+
+* `.help`: Print help.
+* `.play <url>`: Play from a certain URL. Supports an Overcast URL, or a direct URL to the audio file.
+* `.pause\` or \`.p`: Pause currently playing audio.
+* `.resume\` or \`.r`: Resume currently playing audio.
+* `.stop`: Stop currently playing audio.
+* `.seek [500|-10|+20]`: Seek to a certain relative of absolute point in time (in seconds).
+* `.status`: Print current status.
+
+I recommend using Overcast URLs — you'll be able to find one for almost all podcasts.
+
 ## Usage
 
 * `cp config.example.js config.js`
 * Add your token to `config.js`
 * `node index.js`
+
+
+## License
+
+```
+irabot
+
+The author disclaims copyright to this source code.
+In place of a legal notice, here is a blessing:
+
+May you do good and not evil.
+May you find forgiveness for yourself and forgive others.
+May you share freely, never taking more than you give.
+```
